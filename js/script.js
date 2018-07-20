@@ -211,3 +211,106 @@ function listPrimes(f,l){
     }
 }
 //listPrimes(2,10);
+
+function switchToIf(browser){
+
+    if(browser == 'IE'){
+        alert( 'О, да у вас IE!' );
+    }
+    else if(browser == 'Chrome' || browser == 'Firefox' || browser == 'Safari' || browser == 'Opera') {
+        alert( 'Да, и эти браузеры мы поддерживаем' );
+    }
+    else {
+        alert( 'Мы надеемся, что и в вашем браузере все ок!' );
+    }
+}
+
+//switchToIf('Firefox');
+
+function ifToSwith(){
+    var a = +prompt('a?', '');
+    switch(a){
+        case 0:alert( 0 );
+            break;
+        case 1:alert( 1 );
+            break;
+        case 2:
+        case 3:
+            alert( '2,3' );
+            break;
+    }
+}
+
+//ifToSwith();
+
+function checkAge(age) {
+    // if (age > 18) {
+    //     return true;
+    // } else {
+    //     return confirm('Родители разрешили?');
+    // }
+    //return (age > 18) ? true: confirm('Родители разрешили?');
+    return (age > 18)||confirm('Родители разрешили?');
+}
+
+//console.log(checkAge(19));
+
+function min(a, b){
+    return (a < b ) ? a : b;
+}
+//console.log(min(1, 1));
+
+function pow(){
+    var x = prompt("Введите число", "");
+    var n = prompt("Введите степень", "");
+    if(n<1||n%1!=0){return "Введите натуральное число";}
+    var i = 1;
+    var result = x;
+    while(i < n){
+        result = result*x;
+        i++;
+    }
+    return result;
+}
+
+//alert(pow());
+
+function sumToLoop(n){
+    var sum = 0;
+    for(var i = 1;i <= n;i++){
+        sum += i;
+    }
+    alert(sum);
+}
+
+//sumToLoop(100);
+
+function sumToRecursion(n){
+    var sum =0;
+    if (n > 1) {
+        sum = n + sumToRecursion(n - 1);
+    }
+    else if(n ==1 ){return 1;}
+    return sum;
+}
+
+//alert(sumToRecursion(100));
+
+function sumToFormula(n){
+return ((1 + n)/2)*n;
+}
+//alert(sumToFormula(100));
+function factorial(n){
+    if(n>=1){
+        var result;
+        if(n ==1 ){return 1;}
+        result = n*factorial(n-1);
+        return result;
+    }
+}
+
+//alert(factorial(5));
+
+function fib(n){
+    
+}
