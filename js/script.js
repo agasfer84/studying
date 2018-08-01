@@ -1,10 +1,8 @@
 "use strict";
 
-function myAlert(){
+function myAlert() {
     alert("Я – JavaScript!");
 }
-
-//myAlert();
 
 function variables() {
     var admin, name;
@@ -12,8 +10,6 @@ function variables() {
     admin = name;
     alert(admin);
 }
-
-//variables();
 
 function declareVariables() {
     var earthName = "Земля"; //var ourPlanetName
@@ -23,122 +19,122 @@ function declareVariables() {
 function types() {
     var obj = {};
     var arr = [];
+
     console.log(obj, arr);
     console.log(typeof obj, typeof arr);// object, object
 }
-
-//types();
 
 function operatorsTest() {
     var a = 2;
     var x = 1 + (a *= 2);
     var iThinkX = 5;
+
     console.log(x == iThinkX);
 }
-//operatorsTest();
 
 function askName() {
-    var ask = prompt("What is your name?",'');
+    var ask = prompt("What is your name?", '');
+
     alert(ask);
 }
-//askName();
-function jsOfficialName(){
+
+function jsOfficialName() {
     var question = prompt('Каково "официальное" название JavaScript?', "");
-    if(question == "ECMAScript"){
+
+    if (question == "ECMAScript") {
         alert("Верно!");
-    }
-    else {
+    } else {
         alert('Не знаете? "ECMAScript"!');
     }
 }
 
-//jsOfficialName();
-
-function sign(){
-    var getNumber = prompt('Введите число','');
+function sign() {
+    var getNumber = prompt('Введите число', '');
     var result = false;
-    if (getNumber > 0){result = 1;}
-    else if (getNumber < 0){result = -1;}
-    else if (getNumber == 0){result = 0;}
+
+    if (getNumber > 0) {
+        result = 1;
+    } else if (getNumber < 0) {
+        result = -1;
+    } else if (getNumber == 0) {
+        result = 0;
+    }
+
     alert(result);
 }
 
-//sign();
-
 function whoAreYou() {
-    var loginForm = prompt('Кто пришел?','');
-    if (loginForm == "Админ"){
-        var passwordform = prompt('Пароль?','');
-        if (passwordform ==  "Чёрный Властелин"){
+    var loginForm = prompt('Кто пришел?', '');
+
+    if (loginForm == "Админ") {
+        var passwordform = prompt('Пароль?', '');
+
+        if (passwordform ==  "Чёрный Властелин") {
             alert("Добро пожаловать!");
-        }
-        else if(passwordform == null){
+        } else if (passwordform == null) {
             alert("Вход отменен");
-        }
-        else {
+        } else {
             alert("Пароль неверен");
         }
-    }
-    else if (loginForm == null){
+    } else if (loginForm == null) {
         alert("Вход отменен");
-    }
-    else {
+    } else {
         alert("Я вас не знаю");
     }
 }
 
-//whoAreYou();
-
-function toTernarRewriteTest(){
-    function usual(a, b){
+function toTernarRewriteTest() {
+    function usual(a, b) {
         var result;
+
         if (a + b < 4) {
             result = 'Мало';
         } else {
             result = 'Много';
         }
+
         return result
     }
 
     function ternar(a, b){
         var result;
         result = (a + b < 4) ? 'Мало' : 'Много';
+
         return result;
     }
 
     console.log(usual(1, 2), ternar(1, 2));
-    console.log(usual(1, 2)==ternar(1, 2));
+    console.log(usual(1, 2) == ternar(1, 2));
 }
-
-//toTernarRewriteTest();
 
 function toTernarRewrite2() {
     var message;
-    var login = prompt("Логин","");
+    var login = prompt("Логин", "");
+
     message = (login == 'Вася') ? 'Привет' : (login == 'Директор') ? 'Здравствуйте' : (login == '' || login == null) ? 'Нет логина' : '';
+
     alert(message);
 }
-//toTernarRewrite2();
 
 function inDiapason() {
-var age=91;
-    console.log(age<=90&&age>=14);
+    var age = 91;
+
+    console.log(age <= 90 && age >= 14);
 }
 
-//inDiapason();
-
-function outDiapason(){
-    var age=14;
+function outDiapason() {
+    var age = 14;
     // if(!(age>=14&&age<=90)){console.log("вне диапазона");}
     // else {console.log("в диапазное");}
 
-    if((age<14||age>90)){console.log("вне диапазона");}
-    else {console.log("в диапазное");}
+    if ((age < 14 || age > 90)) {
+        console.log("вне диапазона");
+    } else {
+        console.log("в диапазное");
+    }
 }
 
-//outDiapason();
-
-function primitiveConversionsTest(){
+function primitiveConversionsTest() {
     console.log(
         ("" + 1 + 0),//10
         ("" - 1 + 0),//-1
@@ -163,36 +159,36 @@ function primitiveConversionsTest(){
     );
 }
 
-//primitiveConversionsTest();
+function evenNumbers() {
+    for (var i = 2; i <= 10; i++) {
 
-function evenNumbers(){
-    for(var i=2; i<=10; i++){
-        if(i%2){continue;}
+        if (i % 2) {
+            continue;
+        }
+
         alert(i);
     }
 }
-//evenNumbers();
 
-function forToWhile(){
+function forToWhile() {
     var i = 0;
-    while(i < 3){
+
+    while (i < 3) {
         alert( "номер " + i + "!" );
         i++;
     }
 }
 
-//forToWhile();
-function checkNumberValue()
-{
-    while(true){
+function checkNumberValue() {
+    while (true) {
         var numberValue = +prompt("Введите число больше 100","");//+ приводим возвращаемую строку к числу
-        if(numberValue>100||!numberValue){break;}
+        if (numberValue > 100 || !numberValue) {
+            break;
+        }
     }
 }
 
-//checkNumberValue();
-
-function listPrimes(f,l){
+function listPrimes(f, l) {
     // for(var i=f; i<=l; i++){
     //     var checker = 1;
     //     for(var j=2; j<=i-1&&i!=j; j++) {
@@ -210,38 +206,33 @@ function listPrimes(f,l){
         alert(i); // простое
     }
 }
-//listPrimes(2,10);
 
-function switchToIf(browser){
+function switchToIf(browser) {
 
     if(browser == 'IE'){
         alert( 'О, да у вас IE!' );
     }
     else if(browser == 'Chrome' || browser == 'Firefox' || browser == 'Safari' || browser == 'Opera') {
         alert( 'Да, и эти браузеры мы поддерживаем' );
-    }
-    else {
+    } else {
         alert( 'Мы надеемся, что и в вашем браузере все ок!' );
     }
 }
 
-//switchToIf('Firefox');
-
-function ifToSwith(){
+function ifToSwith() {
     var a = +prompt('a?', '');
-    switch(a){
-        case 0:alert( 0 );
-            break;
-        case 1:alert( 1 );
-            break;
+
+    switch (a) {
+        case 0: alert( 0 );
+                break;
+        case 1: alert( 1 );
+                break;
         case 2:
         case 3:
             alert( '2,3' );
             break;
     }
 }
-
-//ifToSwith();
 
 function checkAge(age) {
     // if (age > 18) {
@@ -250,67 +241,124 @@ function checkAge(age) {
     //     return confirm('Родители разрешили?');
     // }
     //return (age > 18) ? true: confirm('Родители разрешили?');
-    return (age > 18)||confirm('Родители разрешили?');
+    return (age > 18) || confirm('Родители разрешили?');
 }
 
-//console.log(checkAge(19));
-
-function min(a, b){
+function min(a, b) {
     return (a < b ) ? a : b;
 }
-//console.log(min(1, 1));
 
-function pow(){
+function pow() {
     var x = prompt("Введите число", "");
     var n = prompt("Введите степень", "");
-    if(n<1||n%1!=0){return "Введите натуральное число";}
+
+    if( n < 1 || n % 1 != 0){
+
+        return "Введите натуральное число";
+    }
+
     var i = 1;
     var result = x;
+
     while(i < n){
-        result = result*x;
+        result = result * x;
         i++;
     }
+
     return result;
 }
 
-//alert(pow());
-
-function sumToLoop(n){
+function sumToLoop(n) {
     var sum = 0;
-    for(var i = 1;i <= n;i++){
+
+    for (var i = 1; i <= n; i++) {
         sum += i;
     }
+
     alert(sum);
 }
 
-//sumToLoop(100);
+function sumToRecursion(n) {
+    var sum = 0;
 
-function sumToRecursion(n){
-    var sum =0;
     if (n > 1) {
         sum = n + sumToRecursion(n - 1);
+    } else if(n == 1 ){
+
+        return 1;
     }
-    else if(n ==1 ){return 1;}
+
     return sum;
 }
 
-//alert(sumToRecursion(100));
-
-function sumToFormula(n){
-return ((1 + n)/2)*n;
+function sumToFormula(n) {
+    return ((1 + n) / 2) * n;
 }
-//alert(sumToFormula(100));
+
 function factorial(n){
-    if(n>=1){
+
+    if (n >= 1) {
         var result;
-        if(n ==1 ){return 1;}
-        result = n*factorial(n-1);
+
+        if(n == 1){
+
+            return 1;
+        }
+
+        result = n * factorial(n - 1);
+
         return result;
     }
 }
 
-//alert(factorial(5));
+function fib(n) {
+    var result;
 
-function fib(n){
-    
+    if(n == 1 || n == 2){
+        result = 1;
+    } else if (n > 2) {
+        var a = 1;
+        var b = 1;
+
+        for (var i = 3; i <= n; i++) {
+            result = a + b;
+            a = b;
+            b = result;
+        }
+
+    }
+
+    return result;
 }
+
+(function g() { return 1; });
+
+//alert(g);
+
+//myAlert();
+//variables();
+//types();
+//operatorsTest();
+//askName();
+//jsOfficialName();
+//sign();
+//whoAreYou();
+//toTernarRewriteTest();
+//toTernarRewrite2();
+//inDiapason();
+//outDiapason();
+//primitiveConversionsTest();
+//evenNumbers();
+//forToWhile();
+//checkNumberValue();
+//listPrimes(2,10);
+//switchToIf('Firefox');
+//ifToSwith();
+//console.log(checkAge(19));
+//console.log(min(1, 1));
+//alert(pow());
+//sumToLoop(100);
+//alert(sumToRecursion(100));
+//alert(sumToFormula(100));
+//alert(factorial(5));
+//console.log(fib(77));
