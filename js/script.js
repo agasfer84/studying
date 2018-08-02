@@ -248,9 +248,7 @@ function min(a, b) {
     return (a < b ) ? a : b;
 }
 
-function pow() {
-    var x = prompt("Введите число", "");
-    var n = prompt("Введите степень", "");
+function pow(x, n) {
 
     if( n < 1 || n % 1 != 0){
 
@@ -295,7 +293,7 @@ function sumToFormula(n) {
     return ((1 + n) / 2) * n;
 }
 
-function factorial(n){
+function factorial(n) {
 
     if (n >= 1) {
         var result;
@@ -333,6 +331,210 @@ function fib(n) {
 
 (function g() { return 1; });
 
+function sumInterface() {
+    var firstNumber = +prompt("Введите первое число", "");
+    var secondNumber = +prompt("Введите второе число", "");
+    var sum  = firstNumber + secondNumber;
+    alert(sum);
+}
+
+function sumPrices() {
+    // alert((0.1 * 100 + 0.2 * 100) / 100 + '$' );
+    var price1 = 0.1, price2 = 0.2;
+    alert( +(price1 + price2).toFixed(2) );
+}
+
+function getDecimal(num) {
+    var floor = Math.floor( Math.abs(num) );
+    console.log(( Math.abs(num) * 100 - floor * 100) / 100);
+}
+
+function fibBinet(n) {
+    var psi = (1 + Math.sqrt(5)) / 2;
+    var fn = Math.round(Math.pow(psi, n) / Math.sqrt(5));
+
+    return fn;
+}
+
+function randomMax() {
+    var max = -14;
+
+    return Math.random() * Math.abs(max);
+}
+
+function randomMinMax() {
+    //interesting but too slow
+    var min = 5;
+    var max = 10;
+
+    var iteration = min + (Math.random() * Math.abs(max));
+
+    if (iteration < max){
+        return iteration
+    }
+
+    return randomMinMax();
+}
+
+function randomMinMaxMentorDesign() {
+    var min = 5;
+    var max = 10;
+
+return min + (Math.random() * (Math.abs(max) - Math.abs(min)));
+}
+
+function randomIntegerMentorDesign(min, max) {
+    var rand = min + Math.random() * (max + 1 - min);
+    rand = Math.floor(rand);
+
+    return rand;
+}
+
+function ucFirst(str) {
+    var firstSimbol = str.charAt(0);
+    var capitalSimbol = firstSimbol.toUpperCase();
+
+    return capitalSimbol + str.slice(1);
+}
+
+function checkSpam(str) {
+    var lowerStr =  str.toLowerCase();
+    var spam1 = "viagra";
+    var spam2 = "xxx";
+
+    if (lowerStr.indexOf(spam1) != -1 || lowerStr.indexOf(spam2) != -1) {
+
+      return true;
+    }
+
+    return false;
+}
+function truncate(str, maxlength) {
+
+    if (str.length > maxlength) {
+        var newStr = str.slice(0, maxlength  - 3);
+        return newStr + "...";
+    }
+
+    return str;
+}
+
+function extractCurrencyValue(str) {
+
+    var newStr = "";
+
+    for (var i = 0; i <= str.length; i++) {
+
+       if(Number(str[i]) || Number(str[i]) == 0) {
+           newStr += str[i];
+       }
+
+    }
+
+    return Number(newStr);
+}
+
+function extractCurrencyValueByPos(str) {
+
+    var numberStr = "0123456789";
+    var newStr = "";
+
+    for (var i = 0; i <= str.length; i++) {
+
+        if(numberStr.indexOf(str[i]) != -1) {
+            newStr += str[i];
+        }
+
+    }
+
+    return Number(newStr);
+}
+
+function helloObject() {
+    var user = {};
+    user.name = "Вася";
+    user.surname = "Петров";
+    user.name = "Сергей";
+    delete user.name;
+}
+
+function isEmpty(obj) {
+    var counter = 0;
+
+    for(var prop in obj) {
+        counter++;
+    }
+
+   return (counter == 0);
+}
+
+function isEmptyMentorDesign(obj) {
+    for (var key in obj) {
+        return false;
+    }
+    return true;
+}
+
+function sumSalaries() {
+    var salaries = {
+        "Вася": 100,
+        "Петя": 300,
+        "Даша": 250
+    };
+    var sum = 0;
+
+    for (var prop in salaries) {
+        sum += salaries[prop];
+    }
+
+    return sum;
+}
+
+function maxSalary() {
+    var salaries = {
+        "Вася": 100,
+        "Петя": 300,
+        "Даша": 250
+    };
+
+    var maxsalary = 0;
+    var maxSalaryWorker = "";
+
+    for (var prop in salaries) {
+
+        if(maxsalary < salaries[prop]) {
+            maxsalary = salaries[prop];
+            maxSalaryWorker = prop
+        }
+    }
+
+    if (maxSalaryWorker == "") {
+        return "нет сотрудников";
+    }
+
+    return  maxSalaryWorker;
+}
+
+function multiplyNumeric() {
+    var menu = {
+        width: 200,
+        height: 300,
+        title: "My menu"
+    };
+
+    function isNumeric(n) {
+        return !isNaN(parseFloat(n)) && isFinite(n)
+    }
+
+    for (var prop in menu) {
+
+        if (isNumeric(menu[prop])) {
+            menu[prop] *= 2;
+        }
+    }
+
+    return menu;
+}
 //alert(g);
 
 //myAlert();
@@ -362,3 +564,17 @@ function fib(n) {
 //alert(sumToFormula(100));
 //alert(factorial(5));
 //console.log(fib(77));
+//sumInterface();
+//sumPrices();
+//getDecimal(5);
+//console.log( fibBinet(8) );
+//console.log( randomMax() );
+//console.log( randomMinMax() );
+//console.log( randomMinMaxMentorDesign() );
+//console.log( randomIntegerMentorDesign(1, 3) );
+//console.log( ucFirst("") );
+//console.log( checkSpam("innocent rabbit") );
+//console.log( truncate("Всем привет!", 20) );
+//console.log( extractCurrencyValueByPos("$a120b") );
+//console.log( maxSalary() );
+//console.log( multiplyNumeric() );
