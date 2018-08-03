@@ -250,17 +250,36 @@ function min(a, b) {
 
 function pow(x, n) {
 
-    if( n < 1 || n % 1 != 0){
+    if (n == 0 && x == 0) {
+        return NaN;
+    }
 
-        return "Введите натуральное число";
+    if (n == 0) {
+        return 1;
+    }
+
+
+
+    // if ( n < 0 || n % 1 != 0) {
+    //
+    //     return "Введите натуральное число";
+    // }
+    if (n % 1 != 0) {
+        result = Math.pow(x, n); //todo something
+
+        return result;
     }
 
     var i = 1;
     var result = x;
 
-    while(i < n){
+    while(i < Math.abs(n)){
         result = result * x;
         i++;
+    }
+
+    if (n < 0) {
+       result = 1/result;
     }
 
     return result;
@@ -535,8 +554,63 @@ function multiplyNumeric() {
 
     return menu;
 }
-//alert(g);
 
+function getLastInArray(goods) {
+    return goods[goods.length - 1];
+}
+
+function addItemInArray(goods) {
+    goods.push("Компьютер");
+
+    return goods;
+}
+
+function createArray() {
+    var styles = ["Джаз", "Блюз"];
+
+    styles.push("Рок-н-Ролл");
+    styles[styles.length - 2] = "Классика";
+
+    var first = styles.shift();
+
+    console.log(first);
+    styles.unshift("Рэп", "Регги");
+
+    return styles;
+}
+
+function randomFromArray() {
+    var arr = ["Яблоко", "Апельсин", "Груша", "Лимон"];
+    // var min = 0;
+    // var max = 3;
+    // var rand = min + Math.floor(Math.random() * (max + 1 - min));
+
+    var rand = Math.floor(Math.random() * arr.length); //mentor design
+
+    if (arr[rand]) {
+        return arr[rand];
+    }
+}
+
+function calculatorForInput() {
+
+    var arr = [];
+    var summ = 0;
+    var input = prompt("Введите значение",0);
+    while (true) {
+
+        if(input === "" || isNaN(input)|| input == null) break;
+
+        arr.push(+input);
+    }
+
+    for (var i = 0; i < arr.length; i++) {
+        summ += arr[i];
+    }
+
+    alert(summ);
+}
+//alert(g);
 //myAlert();
 //variables();
 //types();
@@ -578,3 +652,8 @@ function multiplyNumeric() {
 //console.log( extractCurrencyValueByPos("$a120b") );
 //console.log( maxSalary() );
 //console.log( multiplyNumeric() );
+//console.log( getLastInArray([1,2,3]) );
+//console.log( addItemInArray([1,2,3]) );
+//console.log( createArray() );
+//console.log( randomFromArray() );
+//calculatorForInput();
