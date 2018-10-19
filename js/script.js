@@ -596,9 +596,9 @@ function calculatorForInput() {
 
     var arr = [];
     var summ = 0;
-    var input = prompt("Введите значение",0);
-    while (true) {
 
+    while (true) {
+        var input = prompt("Введите значение",0);
         if(input === "" || isNaN(input)|| input == null) break;
 
         arr.push(+input);
@@ -609,6 +609,265 @@ function calculatorForInput() {
     }
 
     alert(summ);
+}
+
+function find(arr, value) {
+
+    for (var i = 0; i < arr.length; i++) {
+
+        if (arr[i] === value){
+            return i;
+        }
+    }
+
+    return -1;
+}
+
+function filterRange(arr, a, b) {
+    var results = [];
+
+    for (var i = 0; i < arr.length; i++) {
+
+        if (arr[i] <= b && arr[i] >= a) {
+            results.push(arr[i]);
+        }
+    }
+
+    return results;
+}
+
+function eratosthenesSieve() {
+    var arr = [];
+    var newarr = [];
+
+    for (var i = 2; i <= 100; i++) {
+       arr.push(i);
+    }
+
+    console.log(arr);
+
+    function getStep(arr, p) {
+
+        // if (p*p >= 100) {
+        //     return arr;
+        // }
+            for (var d = p; d <= arr.length+1; d++) {
+
+                if (d % p != 0) {
+                    newarr.push(d);
+                }
+            }
+
+            return newarr;
+    }
+
+    var step_arr = [];
+
+    for(var i = 2; i*i <= 100; i++) {
+        step_arr = getStep(step_arr, i);
+    }
+
+    console.log(step_arr);
+
+    //todo: Do it later
+}
+
+function maximalSubarray(arr) {
+
+    var sum = 0;
+    var max = 0;
+
+    for (var i = 0; i < arr.length; i++){
+        sum +=  arr[i];
+
+        if(sum > max) {
+            max = sum
+        }
+
+        if(sum < 0) {
+            sum = 0;
+        }
+    }
+
+    console.log(max);
+}
+
+function addClass(object, cls) {
+
+    var obj = {
+        className: 'open menu'
+    };
+
+    var classes_arr = obj.className.split(" ");
+
+    if (classes_arr.indexOf(cls) == -1) {
+        classes_arr.push(cls);
+    }
+
+    var classes = classes_arr.join(" ");
+    var result = {
+        className: classes
+    };
+
+    console.log(result);
+}
+
+function camelize(string) {
+
+    var str_arr = string.split("-");
+    var new_arr = [];
+
+    str_arr.forEach(function(item, i, arr){
+
+        var capitalChar = item;
+
+        if (i != 0) {
+            capitalChar = item[0].toUpperCase();
+
+            for (var j = 1; j < item.length; j++) {
+                capitalChar += item[j]
+            }
+        }
+
+        new_arr.push(capitalChar);
+    });
+
+    var new_str = new_arr.join("");
+
+console.log(new_str);
+}
+
+function camelize_mentor_design(str) {
+    var arr = str.split('-');
+
+    for (var i = 1; i < arr.length; i++) {
+        // преобразовать: первый символ с большой буквы
+        arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].slice(1);
+    }
+
+    return arr.join('');
+}
+
+function removeClass(object, cls) {
+
+    var obj = {
+        className: 'open menu menu'
+    };
+
+    var classes_arr = obj.className.split(" ");
+    var new_classes_arr = [];
+
+    for (var i = 0; i < classes_arr.length; i++) {
+
+        if (classes_arr[i] != cls) {
+            new_classes_arr.push(classes_arr[i]);
+        }
+    }
+
+    var classes = new_classes_arr.join(" ");
+    var result = {
+        className: classes
+    };
+
+    console.log(result);
+}
+
+
+function filterRangeInPlace(a, b) {
+    var arr = [5, 3, 8, 1, 4, 4];
+
+    for (var i = 0; i < arr.length; i++) {
+
+        if(arr[i]< a || arr[i]>b) {
+            arr.splice(i, 1);
+        }
+    }
+
+    console.log(arr);
+}
+
+function sortArray() {
+    var arr = ["HTML", "JavaScript", "CSS"];
+    var arrSorted = arr.concat().sort();
+    console.log(arr, arrSorted);
+}
+
+function sortReverse() {
+    var arr = [5, 2, 1, -10, 8];
+
+    console.log(arr.sort().reverse());
+}
+
+function randomSort() {
+    var arr = [1, 2, 3, 4, 5];
+
+    function compareRandom(a, b) {
+            return Math.random() - Math.random();
+    }
+
+    console.log(arr.sort(compareRandom));
+}
+
+function sortObjects() {
+    var vasya = { name: "Вася", age: 23 };
+    var masha = { name: "Маша", age: 18 };
+    var vovochka = { name: "Вовочка", age: 6 };
+
+    var people = [ vasya , masha , vovochka ];
+    var names = [];
+
+    function compare(a, b) {
+        return a.age - b.age;
+    }
+
+    people.sort(compare);
+
+    for (var i = 0; i < people.length; i++) {
+        names[i] = people[i].name;
+    }
+
+    console.log(names);
+}
+
+function printListRecursion() {
+    var list = { value: 1 };
+    list.next = { value: 2 };
+    list.next.next = { value: 3 };
+    list.next.next.next = { value: 4 };
+    var result;
+    var array = [];
+
+    function rec(item) {
+
+        if(item.next === undefined){
+            array.push(item.value);
+            return item.value;
+        } else {
+            result = rec(item.next);
+            array.push(item.value);
+            return result;
+        }
+
+    }
+
+    rec(list);
+    console.log(array.reverse());
+}
+
+function printListCycle() {
+    var list = { value: 1 };
+    list.next = { value: 2 };
+    list.next.next = { value: 3 };
+    list.next.next.next = { value: 4 };
+    var array = [];
+    var item = list;
+
+    while (item) {
+        array.push(item.value);
+        item = item.next;
+    }
+
+    console.log(array);
 }
 //alert(g);
 //myAlert();
@@ -657,3 +916,26 @@ function calculatorForInput() {
 //console.log( createArray() );
 //console.log( randomFromArray() );
 //calculatorForInput();
+// var arr = ["test", 2, 1.5, false];
+// console.log(find(arr, "test"));
+// var arr = [5, 4, 3, 8, 0];
+// console.log(filterRange(arr, 3, 5));
+//eratosthenesSieve();
+//maximalSubarray([2, -1, 2, 3, -9]);
+
+// addClass(false, 'new');
+// addClass(false, 'open');
+// addClass(false, 'me');
+// addClass(false, 'mymenu');
+
+//camelize("list-style-image");
+
+// removeClass(false, 'menu');
+// removeClass(false, 'blabla');
+//filterRangeInPlace(1, 4);
+//sortArray();
+//sortReverse();
+//randomSort();
+//sortObjects();
+//printListRecursion();
+printListCycle();
