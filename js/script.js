@@ -869,6 +869,146 @@ function printListCycle() {
 
     console.log(array);
 }
+
+function aclean() //todo:refactor
+{
+    var arr = ["воз", "киборг", "корсет", "ЗОВ", "гробик", "костер", "сектор"];
+    var anagramms_sorted = [];
+    var cleaned = [];
+
+    for (var i = 0; i < arr.length; i++) {
+        anagramms_sorted.push(arr[i].toLowerCase().split("").sort());
+    }
+
+    for (var j = 0; j < anagramms_sorted.length; j++) {
+
+        cleanNotUniq(anagramms_sorted[j], anagramms_sorted);
+
+        cleaned.push(anagramms_sorted[j]);
+    }
+
+    function cleanNotUniq(anagramma, array) {
+        var index = array.indexOf(anagramma);
+
+            if (index != -1) {
+                array.splice(index, 1);
+                arr.splice(index, 1);
+            }
+    }
+
+    console.log(arr);
+}
+
+function aclean_mentor()
+{
+    var arr = ["воз", "киборг", "корсет", "ЗОВ", "гробик", "костер", "сектор"];
+    var anagramms_sorted = [];
+
+    for (var i = 0; i < arr.length; i++) {
+        anagramms_sorted[(arr[i].toLowerCase().split("").sort().join())] = arr[i];
+    }
+
+    var result = [];
+
+    for (var key in anagramms_sorted) {
+        result.push(anagramms_sorted[key]);
+    }
+
+    console.log(result);
+}
+
+function unique() {
+    var strings = ["кришна", "кришна", "харе", "харе",
+        "харе", "харе", "кришна", "кришна", "8-()"
+    ];
+
+    var unique = [];
+
+    for (var i = 0; i < strings.length; i++) {
+        if (unique.indexOf(strings[i]) !== -1) continue;
+        unique.push(strings[i]);
+    }
+
+    console.log(unique);
+}
+
+function unique_mentor() {
+    var strings = ["кришна", "кришна", "харе", "харе",
+        "харе", "харе", "кришна", "кришна", "8-()"
+    ];
+
+    var unique = {};
+
+    for (var i = 0; i < strings.length; i++) {
+        unique[strings[i]] = true;
+    }
+
+    var result = Object.keys(unique);
+
+    console.log(result);
+
+}
+
+function rewriteForMap() {
+    var arr = ["Есть", "жизнь", "на", "Марсе"];
+    var arrLength = arr.map(
+        function (item) {
+            return item.length;
+        }
+    );
+
+    console.log(arrLength);
+}
+
+function getSums() {
+    var arr = [ 1, 2, 3, 4, 5 ];
+    var sumsArr = [];
+
+    if (!arr.length) return sumsArr;
+
+    arr.reduce(
+        function(previous, item) {
+            sumsArr.push(previous + item);
+            return previous + item;
+        }
+        , 0);
+
+    console.log(sumsArr);
+}
+
+function checkUndefined(x) {
+    var result = (arguments.length>0) ? 1 : 0;
+    console.log(result);
+}
+
+function sumArguments() {
+    var sum = 0;
+
+    for (var i = 0; i < arguments.length; i++)
+    {
+        sum = sum + arguments[i];
+    }
+
+    console.log(sum);
+}
+
+function newDate() {
+    var date = new Date(2012, 1, 20, 3, 12);
+    console.log(date);
+}
+
+function getWeekDay() {
+    var date = new Date(2012,0,3);
+    var dayName = date.toLocaleString("ru", {weekday : "short"});
+    console.log(dayName);
+}
+
+function getLocalDay() //todo:
+{
+    var date = new Date(2012, 0, 3);
+    console.log(date.getDay())
+}
+//console.log(performance.now()/1000 +' sec');
 //alert(g);
 //myAlert();
 //variables();
@@ -938,4 +1078,15 @@ function printListCycle() {
 //randomSort();
 //sortObjects();
 //printListRecursion();
-printListCycle();
+//printListCycle();
+//aclean();
+//aclean_mentor();
+//unique();
+//unique_mentor();
+//rewriteForMap();
+//getSums();
+//checkUndefined();
+//sumArguments(1, 2, 3, 4);
+//newDate();
+//getWeekDay();
+getLocalDay();
