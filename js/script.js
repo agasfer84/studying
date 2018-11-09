@@ -1003,10 +1003,76 @@ function getWeekDay() {
     console.log(dayName);
 }
 
-function getLocalDay() //todo:
+function getLocalDay()
 {
     var date = new Date(2012, 0, 3);
-    console.log(date.getDay())
+    var dateNumber = date.getDay();
+
+    if (dateNumber == 0) {
+        dateNumber = 7;
+    }
+
+    console.log(dateNumber)
+}
+
+function getDateAgo(days) {
+    var date = new Date(2015, 0, 2);
+    var date_ago = new Date(date);
+    date_ago.setDate(date.getDate() - days);
+
+    console.log(date_ago);
+}
+
+function getLastDayOfMonth(year, month) {
+    var date = new Date(year, month + 1, 0);
+
+    console.log(date.getDate());
+}
+
+function getSecondsToday() {
+    var curDate = new Date();
+    var startDate = new Date().setHours(0, 0, 0, 0);
+
+    console.log(Math.floor((curDate - startDate)/1000));
+}
+function getSecondsToTomorrow() {
+    var date = new Date();
+    var endDate = new Date().setHours(24, 0, 0, 0);
+
+    console.log(Math.floor((endDate - date)/1000));
+}
+
+function formatDate(d){
+
+    var month = (d.getMonth() + 1);
+    var day = (d.getDate());
+    var hour = (d.getHours());
+    var minute = (d.getMinutes());
+
+    month = (month > 9) ? month : "0" + month;
+    day = (day > 9) ? day : "0" + day;
+    hour = (hour > 9) ? hour : "0" + hour;
+    minute = (minute > 9) ? minute : "0" + minute;
+
+    return day + "." + month + "." + d.getFullYear().toString().substring(2) + " " + hour + ":" + minute;
+}
+
+function formatDateRelative(date) {
+    var curDate = new Date();
+    var diff = curDate - date;
+    var text;
+
+    if (diff < 1000) {
+        text = "только что";
+    } else if (diff < 60000) {
+        text = Math.floor(diff / 1000) + " сек. назад";
+    } else if (diff < 60 * 60000) {
+        text = Math.floor(diff / 60000) + " мин. назад";
+    } else {
+        text = formatDate(date);
+    }
+
+    console.log(text);
 }
 //console.log(performance.now()/1000 +' sec');
 //alert(g);
@@ -1089,4 +1155,10 @@ function getLocalDay() //todo:
 //sumArguments(1, 2, 3, 4);
 //newDate();
 //getWeekDay();
-getLocalDay();
+//getLocalDay();
+//getDateAgo(365);
+//getLastDayOfMonth(2012, 1);
+//getSecondsToday();
+//getSecondsToTomorrow();
+//formatDate();
+formatDateRelative(new Date(new Date - 86400 * 1000));
