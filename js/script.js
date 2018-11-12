@@ -1074,6 +1074,116 @@ function formatDateRelative(date) {
 
     console.log(text);
 }
+
+
+function sum(a){
+    return function(b) {
+        return a + b;
+    };
+}
+
+function makeBuffer() {
+
+    var arg_str = "";
+
+    var foo =  function() {
+        if (arguments.length == 0) {
+
+            return arg_str;
+        }
+
+        for (var i = 0; i < arguments.length; i++) {
+                arg_str += arguments[i];
+        }
+    };
+
+    foo.clear = function() {
+        arg_str = "";
+    };
+
+    return foo;
+}
+var buffer = makeBuffer();
+
+
+
+var users = [{
+    name: "Вася",
+    surname: 'Иванов',
+    age: 20
+}, {
+    name: "Петя",
+    surname: 'Чапаев',
+    age: 25
+}, {
+    name: "Маша",
+    surname: 'Медведева',
+    age: 18
+}];
+
+function byField(field) {
+
+    return function(a, b) {
+        return a[field] > b[field] ? 1 : -1;
+    };
+
+}
+
+function filter(arr, func)
+{
+    var newArr = [];
+
+    arr.forEach(function(item){
+        if(func(item)) {
+            newArr.push(item);
+        }
+    });
+
+    return newArr;
+}
+
+var arr = [1, 2, 3, 4, 5, 6, 7];
+
+function inBetween(start, end) {
+    return function(a){
+        return (a >= start && a <= end);
+    }
+}
+
+function inArray(compare_arr) {
+    return function (a) {
+
+        return (compare_arr.indexOf(a) != -1);
+
+    }
+}
+
+function makeArmy() {//todo:
+
+    var shooters = [];
+
+    for (var i = 0; i < 10; i++) {
+        var shooter = function() { // функция-стрелок
+            console.log( i ); // выводит свой номер
+        };
+        shooters.push(shooter);
+    }
+
+    return shooters;
+}
+
+var army = makeArmy();
+
+army[0](); // стрелок выводит 10, а должен 0
+army[5](); // стрелок выводит 10...
+
+// console.log(filter(arr, function(a) {
+//     return a % 2 == 0
+// }));
+//console.log( filter(arr, inBetween(3, 6)) );
+//console.log( filter(arr, inArray([1, 2, 10])) );
+
+
 //console.log(performance.now()/1000 +' sec');
 //alert(g);
 //myAlert();
@@ -1161,4 +1271,27 @@ function formatDateRelative(date) {
 //getSecondsToday();
 //getSecondsToTomorrow();
 //formatDate();
-formatDateRelative(new Date(new Date - 86400 * 1000));
+//formatDateRelative(new Date(new Date - 86400 * 1000));
+//console.log(sum(5)(-1));
+
+// buffer('Замыкания');
+// buffer(' Использовать');
+// buffer(' Нужно!');
+// console.log(buffer());
+
+// buffer("Тест");
+// buffer(" тебя не съест ", "так-то");
+// console.log( buffer() ); // Тест тебя не съест
+// buffer.clear();
+// console.log( buffer() );
+
+// users.sort(byField('name'));
+// console.log(users);
+// users.forEach(function(user) {
+//     console.log( user.name );
+// });
+//
+// users.sort(byField('age'));
+// users.forEach(function(user) {
+//     console.log( user.name );
+// }); // Маша, Вася, Петя
