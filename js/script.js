@@ -1158,15 +1158,29 @@ function inArray(compare_arr) {
     }
 }
 
-function makeArmy() {//todo:
+function makeArmy() {
 
     var shooters = [];
 
+    // for (var i = 0; i < 10; i++) {
+    //     var shooter = (function(x){// функция-стрелок
+    //         return function() {
+    //             console.log( x ); // выводит свой номер
+    //
+    //         };
+    //         shooters.push(shooter);
+    //     })(i);
+    //
+    // }
+
     for (var i = 0; i < 10; i++) {
-        var shooter = function() { // функция-стрелок
-            console.log( i ); // выводит свой номер
-        };
-        shooters.push(shooter);
+
+            var shooter = function shoo() { // функция-стрелок
+                console.log( shoo.i ); // выводит свой номер
+
+            };
+            shooter.i = i;
+            shooters.push(shooter);
     }
 
     return shooters;
@@ -1174,8 +1188,166 @@ function makeArmy() {//todo:
 
 var army = makeArmy();
 
-army[0](); // стрелок выводит 10, а должен 0
-army[5](); // стрелок выводит 10...
+// army[0](); // стрелок выводит 10, а должен 0
+// army[5](); // стрелок выводит 10...
+
+var obj, method;
+
+obj = {
+    go: function() { console.log(this); }
+};
+
+// obj.go();            // (1) object
+//
+// (obj.go)();          // (2) object
+//
+// (method = obj.go)();      // (3) undefined
+//
+// method = obj;
+// method.go();
+
+var calculator = {
+    read: function(){
+        this.a = +prompt("a", 0);
+        this.b = +prompt("b", 0);
+    },
+    sum: function () {
+        return this.a + this.b;
+    },
+    mul: function () {
+        return this.a * this.b;
+    }
+
+};
+
+var ladder = {
+    step: 0,
+    up: function() { // вверх по лестнице
+        this.step++;
+        return this;
+    },
+    down: function() { // вниз по лестнице
+        this.step--;
+        return this;
+    },
+    showStep: function() { // вывести текущую ступеньку
+        console.log( this.step );
+        return this;
+    }
+};
+
+function sumBrackets(a) {
+    var res = a;
+
+     function f (b) {
+         res += b;
+         return f;
+     }
+
+    f.toString = function () {
+        return res;
+    };
+
+    return f;
+}
+
+var ident_obj = {};
+
+function A() {
+    return ident_obj;
+}
+function B() {
+    return ident_obj;
+}
+
+var a = new A;
+var b = new B;
+
+//console.log( a == b ); // true
+
+function Calculator() {
+    this.read = function() {
+        this.a  = +prompt("a", 0);
+        this.b  = +prompt("b", 0);
+    };
+
+    this.sum = function() {
+       return this.a + this.b;
+    };
+
+    this.mul = function() {
+        return this.a * this.b;
+    };
+}
+
+var calculator_construct = new Calculator();
+// calculator_construct.read();
+//
+// console.log( "Сумма=" + calculator_construct.sum() );
+// console.log( "Произведение=" + calculator_construct.mul() );
+
+function Accumulator(a) {
+    this.value = a;
+    this.read = function () {
+        this.value += +prompt("значение", 0);
+    };
+}
+var accumulator = new Accumulator(1);
+
+//accumulator.read();
+//accumulator.read();
+//console.log( accumulator.value );
+
+
+function CalculatorPower() {
+    this.methods = {
+        "-": function (a, b) {
+            return a - b;
+        },
+        "+": function (a, b) {
+            return a + b;
+        }
+    };
+
+    this.addMethod = function(name, func){
+
+        console.log(func); //todo:
+        this.methods[name] = func;
+    };
+
+    this.calculate = function(str){
+        var operands = str.split(" ");
+
+        if(operands.length != 3) {
+            return console.log('Error values');
+        }
+
+        this.a = +operands[0];
+        this.b = +operands[2];
+        this.name = operands[1];
+
+        return this.methods[this.name](this.a, this.b);
+    };
+
+}
+
+var powerCalc = new CalculatorPower;
+powerCalc.addMethod("*", function(a, b) {
+    return a * b;
+});
+powerCalc.addMethod("/", function(a, b) {
+    return a / b;
+});
+powerCalc.addMethod("**", function(a, b) {
+    return Math.pow(a, b);
+});
+
+//var result = powerCalc.calculate("2 ** 3");
+var result = powerCalc.calculate("2 + 3");
+console.log( result ); // 8
+
+
+//ladder.up().up().down().up().down().showStep();
 
 // console.log(filter(arr, function(a) {
 //     return a % 2 == 0
@@ -1295,3 +1467,10 @@ army[5](); // стрелок выводит 10...
 // users.forEach(function(user) {
 //     console.log( user.name );
 // }); // Маша, Вася, Петя
+
+// calculator.read();
+// console.log( calculator.sum() );
+// console.log( calculator.mul() );
+
+//console.log( [[0]][0][0] );
+//console.log(sumBrackets(0)(1)(2)(3)(4)(5));
