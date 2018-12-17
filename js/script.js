@@ -1310,8 +1310,13 @@ function CalculatorPower() {
     };
 
     this.addMethod = function(name, func){
+        if (typeof func !== "function") {
+            return console.log('Error values');
+        }
 
-        console.log(func); //todo:
+        console.log(func);
+
+
         this.methods[name] = func;
     };
 
@@ -1326,26 +1331,67 @@ function CalculatorPower() {
         this.b = +operands[2];
         this.name = operands[1];
 
+        if (!this.methods[name] || isNaN(this.a) || isNaN(this.b)) {
+            return console.log('Error values');
+        }
+
         return this.methods[this.name](this.a, this.b);
     };
 
 }
 
 var powerCalc = new CalculatorPower;
-powerCalc.addMethod("*", function(a, b) {
-    return a * b;
-});
-powerCalc.addMethod("/", function(a, b) {
-    return a / b;
-});
-powerCalc.addMethod("**", function(a, b) {
-    return Math.pow(a, b);
-});
+// powerCalc.addMethod("*", function(a, b) {
+//     return a * b;
+// });
+// powerCalc.addMethod("/", function(a, b) {
+//     return a / b;
+// });
+// powerCalc.addMethod("**", function(a, b) {
+//     return Math.pow(a, b);
+// });
+//
+// powerCalc.addMethod("test", "test");
 
 //var result = powerCalc.calculate("2 ** 3");
-var result = powerCalc.calculate("2 + 3");
-console.log( result ); // 8
+//var result = powerCalc.calculate("2 + 3");
+//console.log( result ); // 8
 
+
+function User(fullName) {
+    this.fullName = fullName;
+}
+
+var vasya = new User("Василий Попкин");
+
+Object.defineProperties(vasya, {
+
+        firstName: {
+            get: function () {
+                return this.fullName.split(' ')[0];
+            },
+            set: function (value) {
+                this.fullName = value + ' ' + this.lastName;
+            }
+        },
+        lastName: {
+            get: function () {
+                return this.fullName.split(' ')[1];
+            },
+            set: function (value) {
+                this.fullName = this.firstName + ' ' + value;
+            }
+        }
+    }
+);
+
+//console.log( vasya.firstName ); // Василий
+//console.log( vasya.lastName ); // Попкин
+
+// запись в lastName
+vasya.lastName = 'Сидоров';
+
+//console.log( vasya.fullName ); // Василий Сидоров
 
 //ladder.up().up().down().up().down().showStep();
 
@@ -1355,6 +1401,65 @@ console.log( result ); // 8
 //console.log( filter(arr, inBetween(3, 6)) );
 //console.log( filter(arr, inArray([1, 2, 10])) );
 
+function Article() {
+    this.created = new Date();
+    Article.count++;
+    Article.last = this.created;
+
+    //return this.created;
+}
+
+Article.showStats = function () {
+    console.log("Всего: " + this.count + ", Последняя: " + this.last);
+};
+
+Article.count = 0;
+
+
+// new Article();
+// new Article();
+//
+// Article.showStats(); // Всего: 2, Последняя: (дата)
+//
+// new Article();
+//
+// Article.showStats(); // Всего: 3, Последняя: (дата)
+
+
+function sumArgs() {
+    // arguments.reduce = [].reduce; //одалживание метода reduce у array
+    //
+    // return arguments.reduce(function(a, b) {
+    //     return a + b;
+    // });
+
+    // var argsArray = [].slice.call(arguments); //вызов slice у array и приведение arguments к массиву
+    //
+    // return argsArray.reduce(function(a, b) {
+    //         return a + b;
+    //     });
+
+    return [].reduce.call(
+        arguments, function(a, b) { // данном случае arguments - это контекст, т. е this ля reduce (т. е. массив для обхода)
+                   return a + b;
+        }
+    );
+}
+
+//console.log( sumArgs(1, 2, 3) ); // 6, аргументы переданы через запятую, без массива
+
+
+function applyAll() {
+    var argsArray = [].slice.call(arguments, 1); //приводим объект arguments к массиву, убирая первый элемент (который ожидается в виде функции)
+
+    return arguments[0].apply(null, argsArray); //вызываем функцию из первого аргумента и даем ей аргументы в виде нашего массива
+}
+
+function applyAllMentorDesign(func) {
+    return func.apply(this, [].slice.call(arguments, 1));
+}
+
+console.log( applyAll(Math.max, 2, -2, 3) );
 
 //console.log(performance.now()/1000 +' sec');
 //alert(g);
