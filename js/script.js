@@ -1459,7 +1459,74 @@ function applyAllMentorDesign(func) {
     return func.apply(this, [].slice.call(arguments, 1));
 }
 
-console.log( applyAll(Math.max, 2, -2, 3) );
+//console.log( applyAll(Math.max, 2, -2, 3) );
+
+function sayHi() {
+    console.log( this.name );
+}
+sayHi.test = 5;
+//console.log( sayHi.test ); // 5
+
+var bound = sayHi.bind({
+    name: "Вася"
+});
+
+//console.log( bound.test );
+
+// function ask(question, answer, ok, fail) {
+//     var result = prompt(question, '');
+//     if (result.toLowerCase() == answer.toLowerCase()) ok();
+//     else fail();
+// }
+//
+// var user = {
+//     login: 'Василий',
+//     password: '12345',
+//
+//     loginOk: function() {
+//         alert( this.login + ' вошёл в сайт' );
+//     },
+//
+//     loginFail: function() {
+//         alert( this.login + ': ошибка входа' );
+//     },
+//
+//     checkPassword: function() {
+//         ask("Ваш пароль?", this.password, this.loginOk.bind(this), this.loginFail.bind(this));
+//     }
+// };
+//
+// var vasya2 = user;
+// user = null;
+// vasya2.checkPassword();
+
+function ask(question, answer, ok, fail) {
+    var result = prompt(question, '');
+    if (result.toLowerCase() == answer.toLowerCase()) ok();
+    else fail();
+}
+
+var user = {
+    login: 'Василий',
+    password: '12345',
+
+    // метод для вызова из ask
+    loginDone: function(result) {
+        alert( this.login + (result ? ' вошёл в сайт' : ' ошибка входа') );
+    },
+
+    checkPassword: function() {
+        var self = this;
+        ask("Ваш пароль?", this.password,
+                this.loginDone.bind(this, true),
+                this.loginDone.bind(this, false)
+        );
+    }
+};
+
+var vasya3 = user;
+user = null;
+vasya3.checkPassword();
 
 //console.log(performance.now()/1000 +' sec');
 //alert(g);
