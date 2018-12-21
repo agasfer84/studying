@@ -1526,7 +1526,309 @@ var user = {
 
 var vasya3 = user;
 user = null;
-vasya3.checkPassword();
+//vasya3.checkPassword();
+
+function work(a) {
+    return a; // work - произвольная функция, один аргумент
+}
+
+function makeLogging(f, log) {
+    function wrapper(a) {
+        log.push(a);
+        return f.call(this, a);
+    }
+
+    return wrapper;
+}
+
+var log = [];
+work = makeLogging(work, log);
+
+work(1); // 1, добавлено в log
+work(5); // 5, добавлено в log
+
+// for (var i = 0; i < log.length; i++) {
+//    console.log( 'Лог:' + log[i] ); // "Лог:1", затем "Лог:5"
+// }
+
+function work2(a, b) {
+    console.log( a + b ); // work - произвольная функция
+}
+
+function makeLogging2(f, log) {
+
+    function wrapper() {
+        var argsArray = [].slice.call(arguments); //приводим объект arguments к массиву
+        log.push(argsArray);
+        return f.apply(this, argsArray); //вызов через apply
+    }
+
+    return wrapper;
+}
+
+var log2 = [];
+work2 = makeLogging2(work, log2);
+
+work2(1, 2); // 3
+work2(4, 5); // 9
+
+// for (var i = 0; i < log2.length; i++) {
+//     var args = log2[i]; // массив из аргументов i-го вызова
+//     console.log( 'Лог:' + args.join() ); // "Лог:1,2", "Лог:4,5"
+// }
+
+function f(x) {
+    return Math.random() * x; // random для удобства тестирования
+}
+
+function makeCaching(f) {
+    function wrapper(a) {
+
+        if (f.b != a)
+        {
+            f.b = a;
+            f.cache = f.call(this, f.b);
+        }
+
+        //console.log(f.cache);
+
+        return f.cache;
+    }
+
+    return wrapper;
+}
+
+function makeCachingMentorDesign(f) {
+    var cache = {};
+
+    return function(x) {
+        if (!(x in cache)) {
+            cache[x] = f.call(this, x);
+        }
+        return cache[x];
+    };
+
+}
+
+f = makeCaching(f);
+
+var a2, b2;
+
+a2 = f(1);
+b2 = f(1);
+// console.log( a2 == b2 ); // true (значение закешировано)
+//
+// b2 = f(2);
+// console.log( a2 == b2 ); // false, другой аргумент => другое значение
+
+function formatDatePolymorphic(date) {
+    var c = {}.toString.call(date).slice(8, -1);
+
+    function setPrefixDate(x) {
+        return (x < 10) ? "0" + x : "" + x;
+    }
+
+    var newDate = new Date(0, 0 ,0);
+
+    if (c == 'Date') {
+        newDate = date;
+    } else if (c == 'Array') {
+        newDate = new Date(date[0], date[1], date[2]);
+    } else if (c == 'Number') {
+        newDate = new Date(1000 * date);
+    } else if (c == 'String') {
+        newDate = new Date(Date.parse(date));
+    }
+
+    return setPrefixDate(newDate.getDate()) + "." + setPrefixDate(newDate.getMonth() + 1) + "." + newDate.getFullYear().toString().slice(2, 4);
+}
+
+function formatDatePolymorphicMentorDesign(date) {
+    if (typeof date == 'number') {
+        // перевести секунды в миллисекунды и преобразовать к Date
+        date = new Date(date * 1000);
+    } else if (typeof date == 'string') {
+        // строка в стандартном формате автоматически будет разобрана в дату
+        date = new Date(date);
+    } else if (Array.isArray(date)) {
+        date = new Date(date[0], date[1], date[2]);
+    }
+    // преобразования для поддержки полиморфизма завершены,
+    // теперь мы работаем с датой (форматируем её)
+
+    return date.toLocaleString("ru", {day: '2-digit', month: '2-digit', year: '2-digit'});
+
+    /*
+     // можно и вручную, если лень добавлять в старый IE поддержку локализации
+     var day = date.getDate();
+     if (day < 10) day = '0' + day;
+
+     var month = date.getMonth() + 1;
+     if (month < 10) month = '0' + month;
+
+     // взять 2 последние цифры года
+     var year = date.getFullYear() % 100;
+     if (year < 10) year = '0' + year;
+
+     var formattedDate = day + '.' + month + '.' + year;
+
+     return formattedDate;
+     */
+}
+
+// console.log( formatDatePolymorphic('2011-10-02') ); // 02.10.11
+// console.log( formatDatePolymorphic(1234567890) ); // 14.02.09
+// console.log( formatDatePolymorphic([2014, 0, 1]) ); // 01.01.14
+// console.log( formatDatePolymorphic(new Date(2014, 0, 1)) ); // 01.01.14
+
+
+// var leader = {
+//     name: "Василий Иванович",
+//     age: 35
+// };
+
+//console.log(JSON.stringify(leader));
+//console.log(JSON.parse(JSON.stringify(leader)));
+
+var leader = {
+    name: "Василий Иванович"
+};
+
+var soldier = {
+    name: "Петька"
+};
+
+// эти объекты ссылаются друг на друга!
+leader.soldier = soldier;
+soldier.leader = leader;
+
+var team = [leader, soldier];
+
+// console.log(team);
+// console.log(JSON.stringify(team, function(key, value) {
+//     if (key == 'soldier') return soldier.name;
+//     if (key == 'leader') return leader.name;
+//     return value;
+// }));
+
+function printNumbersInterval() {
+    var number = 1;
+    var interval = setInterval( function () {
+            console.log(number);
+
+            if (number >= 20) {
+                clearInterval(interval);
+            }
+
+            number++;
+        }
+        , 100
+    );
+}
+
+//printNumbersInterval();
+
+function printNumbersTimeout() {
+    var number = 1;
+    var timeout = setTimeout( function run () {
+            console.log(number);
+
+            if (number < 20) {
+                setTimeout(run, 100);
+            }
+
+            number++;
+        }
+        , 100
+    );
+}
+
+//printNumbersTimeout();
+
+setTimeout(function() {
+    console.log( i );
+}, 100);
+
+// var i;
+//
+// function hardWork() {
+//     // время выполнения этого кода >100 мс, сам код неважен
+//     for (i = 0; i < 1e8; i++) hardWork[i % 2] = i;
+// }
+
+//hardWork();
+
+// var i;
+// var timer = setInterval(function() { // планируем setInterval каждые 10 мс
+//     i++;
+// }, 10);
+//
+// setTimeout(function() { // через 50 мс - отмена setInterval
+//     clearInterval(timer);
+//     alert( i ); // (*)
+// }, 50);
+//
+// // и запускаем тяжёлую функцию
+// function ff() {
+//     // точное время выполнения не играет роли
+//     // здесь оно заведомо больше 100 мс
+//     for (i = 0; i < 1e8; i++) f[i % 2] = i;
+// }
+//
+// ff();
+
+function ff(x) {
+    console.log( x );
+}
+
+function delay(f, ms) {
+    return function () {
+        var self = this;
+        var a = arguments;
+        setTimeout( function () { f.apply(self, a)}, ms);
+    }
+}
+
+var f1000 = delay(ff, 1000);
+var f1500 = delay(ff, 1500);
+
+// f1000("тест"); // выведет "тест" через 1000 миллисекунд
+// f1500("тест2"); // выведет "тест2" через 1500 миллисекунд
+
+function fd(x) { console.log(x) ;}
+
+function debounce(f, ms) {
+
+    var timer = null;
+
+    return function () {
+        var self = this;
+        var args = arguments;
+
+        function complete() {
+            f.apply(self, args);
+            timer = null;
+        }
+
+        if (timer) {
+            clearTimeout(timer);
+        }
+
+        timer = setTimeout( complete, ms);
+    }
+}
+
+var fms = debounce(fd, 1000);
+
+fms(1); // вызов отложен на 1000 мс
+fms(2); // предыдущий отложенный вызов игнорируется, текущий (2) откладывается на 1000 мс
+
+// через 1 секунду будет выполнен вызов f(1)
+
+setTimeout( function() { fms(3) }, 1100); // через 1100 мс отложим вызов еще на 1000 мс
+setTimeout( function() { fms(4) }, 1200); // игнорируем вызов (3)
+
+// через 2200 мс от начала выполнения будет выполнен вызов f(4)
 
 //console.log(performance.now()/1000 +' sec');
 //alert(g);
