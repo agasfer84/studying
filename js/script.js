@@ -1745,9 +1745,9 @@ function printNumbersTimeout() {
 
 //printNumbersTimeout();
 
-setTimeout(function() {
-    console.log( i );
-}, 100);
+// setTimeout(function() {
+//     console.log( i );
+// }, 100);
 
 // var i;
 //
@@ -1820,15 +1820,118 @@ function debounce(f, ms) {
 
 var fms = debounce(fd, 1000);
 
-fms(1); // вызов отложен на 1000 мс
-fms(2); // предыдущий отложенный вызов игнорируется, текущий (2) откладывается на 1000 мс
+// fms(1); // вызов отложен на 1000 мс
+// fms(2); // предыдущий отложенный вызов игнорируется, текущий (2) откладывается на 1000 мс
 
 // через 1 секунду будет выполнен вызов f(1)
 
-setTimeout( function() { fms(3) }, 1100); // через 1100 мс отложим вызов еще на 1000 мс
-setTimeout( function() { fms(4) }, 1200); // игнорируем вызов (3)
+// setTimeout( function() { fms(3) }, 1100); // через 1100 мс отложим вызов еще на 1000 мс
+// setTimeout( function() { fms(4) }, 1200); // игнорируем вызов (3)
 
 // через 2200 мс от начала выполнения будет выполнен вызов f(4)
+
+var foo = function(a) {
+    console.log(a)
+};
+
+function throttle(f, ms) {
+    var isThrottled = false;
+    var self = this;
+    var args = arguments;
+
+    return function wrapper (a) {
+
+
+        if (isThrottled) {
+            self = this;
+            args = arguments;
+            return;
+        }
+
+        f.apply(this, arguments);
+
+        isThrottled = true;
+
+        function complete() {
+            isThrottled = false;
+            if (args) {
+                wrapper.apply(self, args);
+                self = null;
+                args = null;
+            }
+        }
+
+         setTimeout( complete, ms );
+    }
+}
+
+// затормозить функцию до одного раза в 1000 мс
+var foo1000 = throttle(foo, 1000);
+
+// foo1000(1); // выведет 1
+// foo1000(2); // (тормозим, не прошло 1000 мс)
+// foo1000(3); // (тормозим, не прошло 1000 мс)
+
+// когда пройдёт 1000 мс...
+// выведет 3, промежуточное значение 2 игнорируется
+
+
+function evalCalc() {
+    var expr, res;
+
+    while(true) {
+        expr = prompt("Введите значение", "2*3+2");
+        if (expr == null) break;
+
+        try {
+            res = eval(expr);
+
+            if (!res || isNaN(res)) {
+                throw new Error("результат не определен");
+            }
+
+            alert(res);
+        } catch (e) {
+            alert("Ошибка:" + e.message + ", повторите ввод");
+        }
+    }
+}
+
+//evalCalc();
+
+function CoffeeMachine(power) {
+    this.waterAmount = 0;
+
+    var WATER_HEAT_CAPACITY = 4200;
+
+    var self = this;
+    var timerId;
+
+    function getBoilTime() {
+        return self.waterAmount * WATER_HEAT_CAPACITY * 80 / power;
+    }
+
+    function onReady() {
+        console.log( 'Кофе готово!' );
+    }
+
+    this.run = function() {
+        timerId = setTimeout(onReady, getBoilTime());
+    };
+
+    this.stop = function() {
+        clearTimeout(timerId);
+    }
+
+}
+
+var coffeeMachine = new CoffeeMachine(50000);
+coffeeMachine.waterAmount = 200;
+
+coffeeMachine.run();
+coffeeMachine.stop(); // кофе приготовлен не будет
+
+
 
 //console.log(performance.now()/1000 +' sec');
 //alert(g);
